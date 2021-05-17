@@ -7,7 +7,7 @@ X = np.array([[2,10],[2,5],[8,4],[5,8],[7,5],[6,4],[1,2],[4,9]])
 
 # Hyperparamters
 tolerance = 0.001
-max_itterations = 100
+max_itterations = 1
 
 # params set by assignment brief
 k = 3
@@ -27,7 +27,7 @@ def inital_data_graph():
 def kmeans():
     # for loop to stop infinite loop
     for i in range(max_itterations):
-        print('Iteration ', i)
+        print('Iteration ', i+1 )
         classifications = {}
 
         # loop creates 3 clusters
@@ -36,12 +36,11 @@ def kmeans():
 
         # Loop for each set of coordinates in data points
         for set in X:
-            for j in centroids:
-                distances = [distance(set,centroids[j])]
-
+            distances = [distance(set, centroids[centroid]) for centroid in centroids]
+            
             classification = distances.index(min(distances))
             classifications[classification].append(set)
-
+        print(classifications)
 
 def distance(p1, p2):
     distance = math.sqrt( ( (p1[0]-p2[0]) **2)  + ( (p1[1]-p2[1]) **2) )
