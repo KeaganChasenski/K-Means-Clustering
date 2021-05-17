@@ -1,9 +1,18 @@
-install: venv
-	. venv/bin/activate; pip3 install -Ur requirements.txt
+VENV := venv
 
-venv:
-	test -d venv || python3 -m venv venv
+install: venv
+
+$(VENV)/bin/activate: requirements.txt
+	python3 -m venv $(VENV)
+	./$(VENV)/bin/pip install -r requirements.txt
+
+venv: $(VENV)/bin/activate
+
+run: venv
+	./$(VENV)/bin/python3 kmeans.py
 
 clean:
-	rm -rf venv
-	find -iname "*.pyc" -delete
+	rm -rf $(VENV)
+	find . -type f -name '*.pyc' -delete
+
+.PHONY: all venv run clean
