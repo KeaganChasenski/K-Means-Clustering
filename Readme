@@ -10,3 +10,6 @@ To deactive venv:
 
 To clean:
     make clean
+
+When run, output will be printined to file called
+I had fun with this assignment so I added a folder called data, in which after run there will be a graph of the inital data, and then a graph of the final clustered data (after convergance)
