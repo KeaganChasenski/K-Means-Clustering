@@ -27,20 +27,21 @@ def inital_data_graph():
 def kmeans():
     # for loop to stop infinite loop
     for i in range(max_itterations):
-            classifications = {}
+        print('Iteration ', i)
+        classifications = {}
 
-            # loop creates 3 clusters
-            for i in range(k):
-                classifications[i] = []
+        # loop creates 3 clusters
+        for i in range(k):
+            classifications[i] = []
 
-            # Loop for each set of coordinates in data points
-            for set in X:
-                for j in centroids:
-                    distances = [distance(set,centroids[j])]
+        # Loop for each set of coordinates in data points
+        for set in X:
+            for j in centroids:
+                distances = [distance(set,centroids[j])]
 
-                classification = distances.index(min(distances))
-                classifications[classification].append(set)
-    print(classifications)
+            classification = distances.index(min(distances))
+            classifications[classification].append(set)
+
 
 def distance(p1, p2):
     distance = math.sqrt( ( (p1[0]-p2[0]) **2)  + ( (p1[1]-p2[1]) **2) )
