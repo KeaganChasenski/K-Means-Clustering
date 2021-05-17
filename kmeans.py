@@ -11,7 +11,7 @@ max_itterations = 100
 
 # params set by assignment brief
 k = 3
-centroids = {'0': X[0] , '1':X[3], '2':X[6] }
+centroids = {'0':X[0] , '1':X[3], '2':X[6] }
 
 colors = 10*["g","r","c","b","k"]
 
@@ -25,7 +25,22 @@ def inital_data_graph():
     plt.savefig('graphs/initial_data.png')
 
 def kmeans():
-    print(centroids)
+    # for loop to stop infinite loop
+    for i in range(max_itterations):
+            classifications = {}
+
+            # loop creates 3 clusters
+            for i in range(k):
+                classifications[i] = []
+
+            # Loop for each set of coordinates in data points
+            for set in X:
+                for j in centroids:
+                    distances = [distance(set,centroids[j])]
+
+                classification = distances.index(min(distances))
+                classifications[classification].append(set)
+    print(classifications)
 
 def distance(p1, p2):
     distance = math.sqrt( ( (p1[0]-p2[0]) **2)  + ( (p1[1]-p2[1]) **2) )
