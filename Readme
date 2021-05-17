@@ -1,0 +1,11 @@
+To make virtual enviroment:
+    make 
+
+To run python code:
+    source ./venv/bin/activate
+    
+To deactive venv:
+    deactivate 
+
+To clean:
+    make clean
