@@ -14,5 +14,6 @@ run: venv
 clean:
 	rm -rf $(VENV)
 	find . -type f -name '*.pyc' -delete
+	find . -type f -name '*.png' -delete
 
 .PHONY: all venv run clean
