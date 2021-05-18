@@ -39,39 +39,53 @@ def distance(p1,p2):
 if __name__ == "__main__" :  
     ##### Step 1 - Assign starting centriods ######
     #### done in params above #####
-    
-    print('Itteration 1 \n')
-    classifications = {}
 
-    for i in range(k):
-        classifications[i] = []
+    for i in range(max_itterations):
+        print('Itteration ', i+1, '\n')
+        classifications = {}
 
-    ###### Step 2 - Calculate Distance for each data point to each centriod ######
-    for x in X:
-        distances = [distance(x, centroids[i]) for i in centroids.keys()]
+        for i in range(k):
+            classifications[i] = []
 
-        ###### Step 3 - Assign each data point to nearest centriod ######
-        classification = distances.index(min(distances))
-        classifications[classification].append(x)
+        ###### Step 2 - Calculate Distance for each data point to each centriod ######
+        for x in X:
+            distances = [distance(x, centroids[i]) for i in centroids.keys()]
 
-    for i in classifications.keys():
-        list = classifications[i]  
+            ###### Step 3 - Assign each data point to nearest centriod ######
+            classification = distances.index(min(distances))
+            classifications[classification].append(x)
+
+        for i in classifications.keys():
+            list = classifications[i]  
+            
+            print('Cluster ', i+1, ':' , list)
+            print('Centriod: ', centroids[i+1] ,"\n")
         
-        print('Cluster ', i+1, ':' , list)
-        print('Centriod: ', centroids[i+1] ,"\n")
-    
-    ##### Step 4 - calculate new centroids from mean of cluster ######
-    # Deep copy of centroids made so can compare
-    prev_centriods = copy.deepcopy(centroids)
+        ##### Step 4 - calculate new centroids from mean of cluster ######
+        # Deep copy of centroids made so can compare
+        prev_centroids = copy.deepcopy(centroids)
+        
 
-    # Calculate the new average of each cluster
-    for c in classifications.keys():
-        print(np.average(classifications[c],axis=0))
+        # Calculate the new average of each cluster
+        for c in classifications.keys():
+            centroids[c+1] = np.average(classifications[c],axis=0)
 
-    ##### Step 5 - Reassign clusters based on new centroids ######
 
-    ##### Step 6 - repeate 4 and 5 until done. ######
+        ##### Step 5 - Reassign clusters based on new centroids ######
+        optimized = True
 
+        for c in centroids:
+            original_centroid = prev_centroids[c]
+            current_centroid = centroids[c]
+            
+            if np.sum((current_centroid - original_centroid) / original_centroid * 100.0) > 1:
+                optimized = False 
+
+        if optimized:
+            break
+
+        ##### Step 6 - repeate 4 and 5 until done. ######
+        ##### Done above in for loop of max itterations #####
 
 
         
