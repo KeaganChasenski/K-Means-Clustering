@@ -37,15 +37,20 @@ def distance(p1,p2):
     return distance
 
 if __name__ == "__main__" :  
-
+    ##### Step 1 - Assign starting centriods ######
+    #### done in params above #####
+    
     print('Itteration 1 \n')
     classifications = {}
 
     for i in range(k):
         classifications[i] = []
 
+    ###### Step 2 - Calculate Distance for each data point to each centriod ######
     for x in X:
         distances = [distance(x, centroids[i]) for i in centroids.keys()]
+
+        ###### Step 3 - Assign each data point to nearest centriod ######
         classification = distances.index(min(distances))
         classifications[classification].append(x)
 
@@ -55,11 +60,17 @@ if __name__ == "__main__" :
         print('Cluster ', i+1, ':' , list)
         print('Centriod: ', centroids[i+1] ,"\n")
     
-    # calculate new centroids from mean of cluster
+    ##### Step 4 - calculate new centroids from mean of cluster ######
+    # Deep copy of centroids made so can compare
+    prev_centriods = copy.deepcopy(centroids)
 
-    # Reassign clusters based on new centroids 
+    # Calculate the new average of each cluster
+    for c in classifications.keys():
+        print(np.average(classifications[c],axis=0))
 
-    # repeate 3 and 4 until done. 
+    ##### Step 5 - Reassign clusters based on new centroids ######
+
+    ##### Step 6 - repeate 4 and 5 until done. ######
 
 
 
