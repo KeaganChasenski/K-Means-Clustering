@@ -4,7 +4,8 @@ import math
 import copy
 
 # Data (examples have two attributes: X, Y , both in range: [1, 10]).
-X = np.array([[2,10],[2,5],[8,4],[5,8],[7,5],[6,4],[1,2],[4,9]])
+X = [[2,10],[2,5],[8,4],[5,8],[7,5],[6,4],[1,2],[4,9]]
+X_elements = {1:[2,10],2:[2,5],3:[8,4],4:[5,8],5:[7,5],6:[6,4],7:[1,2],8:[4,9]}
 
 # Hyperparamters
 tolerance = 0.001
@@ -12,6 +13,8 @@ max_itterations = 10
 
 # params set by assignment brief
 k = 3
+
+##### Step 1 - Assign starting centriods ######
 centroids = {1:[2,10] , 2: [5,8], 3:[1,2]}
 
 def distance(p1,p2):
@@ -28,6 +31,12 @@ def optimised(prev_centroids):
     
     return True
 
+def get_key(val):
+    for key, value in X_elements.items():
+         if val == value:
+             return key
+ 
+    return "key doesn't exist"
 def kmeans():
     for i in range(max_itterations):
         print('Itteration ', i+1, '\n')
@@ -44,8 +53,13 @@ def kmeans():
             cluster = distances.index(min(distances))
             clusters[cluster].append(x)
 
-        for i in clusters.keys():           
-            print('Cluster ', i+1, ':' , str(clusters[i]))
+        for i in clusters.keys(): 
+            items = clusters[i]
+            elements = ''
+            for c in items:
+                elements = elements + str(get_key(c)) + ","
+
+            print('Cluster ', i+1, ':' , elements)
             print('Centriod: ', str(centroids[i+1]) ,"\n")
         
         # Deep copy of centroids made so can compare
@@ -64,7 +78,6 @@ def kmeans():
         if optimised(prev_centroids):
             break
  
-
 def inital_data_graph():  
     plt.scatter(X[:,0], X[:,1], color = 'k', label = "data points")
 
@@ -93,15 +106,12 @@ def clustered_data_graph():
 
 if __name__ == "__main__" :  
 
-    inital_data_graph()
-
-    ##### Step 1 - Assign starting centriods ######
-    #### done in params above #####
+    #inital_data_graph()
 
     ##### Step 2-6 - In kmeans() function ######
     kmeans()
 
-    clustered_data_graph()
+    #clustered_data_graph()
     
 
 
