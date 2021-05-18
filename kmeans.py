@@ -36,10 +36,7 @@ def distance(p1,p2):
     distance = math.sqrt( ( (p1[0]-p2[0]) **2)  + ( (p1[1]-p2[1]) **2) )
     return distance
 
-if __name__ == "__main__" :  
-    ##### Step 1 - Assign starting centriods ######
-    #### done in params above #####
-
+def kmeans():
     for i in range(max_itterations):
         print('Itteration ', i+1, '\n')
         classifications = {}
@@ -86,6 +83,12 @@ if __name__ == "__main__" :
 
         ##### Step 6 - repeate 4 and 5 until done. ######
         ##### Done above in for loop of max itterations #####
+
+if __name__ == "__main__" :  
+    ##### Step 1 - Assign starting centriods ######
+    #### done in params above #####
+    kmeans()
+    
 
 
         
