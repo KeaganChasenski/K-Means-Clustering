@@ -14,23 +14,6 @@ max_itterations = 10
 k = 3
 centroids = {1:[2,10] , 2: [5,8], 3:[1,2]}
 
-def example_number(check):
-    if check.all() == [2,10]:
-        return 1
-    elif check == [2,5]:
-        return 2
-    elif check == [8,4]:
-        return 3
-    elif check == [5,8]:
-        return 4
-    elif check == [7,5]:
-        return 5
-    elif check == [6,4]:
-        return 6
-    elif check == [1,2]:
-        return 7
-    else:
-        return 8
 
 def distance(p1,p2):
     distance = math.sqrt( ( (p1[0]-p2[0]) **2)  + ( (p1[1]-p2[1]) **2) )
@@ -39,23 +22,21 @@ def distance(p1,p2):
 def kmeans():
     for i in range(max_itterations):
         print('Itteration ', i+1, '\n')
-        classifications = {}
+        clusters = {}
 
         for i in range(k):
-            classifications[i] = []
+            clusters[i] = []
 
         ###### Step 2 - Calculate Distance for each data point to each centriod ######
         for x in X:
             distances = [distance(x, centroids[i]) for i in centroids.keys()]
 
             ###### Step 3 - Assign each data point to nearest centriod ######
-            classification = distances.index(min(distances))
-            classifications[classification].append(x)
+            cluster = distances.index(min(distances))
+            clusters[cluster].append(x)
 
-        for i in classifications.keys():
-            list = classifications[i]  
-            
-            print('Cluster ', i+1, ':' , list)
+        for i in clusters.keys():           
+            print('Cluster ', i+1, ':' , clusters[i])
             print('Centriod: ', centroids[i+1] ,"\n")
         
         ##### Step 4 - calculate new centroids from mean of cluster ######
@@ -64,8 +45,10 @@ def kmeans():
         
 
         # Calculate the new average of each cluster
-        for c in classifications.keys():
-            centroids[c+1] = np.average(classifications[c],axis=0)
+        for c in clusters.keys():
+            print('cluster at c')
+            print(clusters[c])
+            centroids[c+1] = np.mean(clusters[c], axis=0, dtype=np.float16)
 
 
         ##### Step 5 - Reassign clusters based on new centroids ######
@@ -75,7 +58,7 @@ def kmeans():
             original_centroid = prev_centroids[c]
             current_centroid = centroids[c]
             
-            if np.sum((current_centroid - original_centroid) / original_centroid * 100.0) > 1:
+            if np.sum((current_centroid - original_centroid) / original_centroid * 100.0) > tolerance:
                 optimized = False 
 
         if optimized:
@@ -84,10 +67,40 @@ def kmeans():
         ##### Step 6 - repeate 4 and 5 until done. ######
         ##### Done above in for loop of max itterations #####
 
+def inital_data_graph():  
+    plt.scatter(X[:,0], X[:,1], color = 'k', label = "data points")
+
+    colmap = {1: 'r', 2: 'g', 3: 'b'}
+    for i in centroids.keys():
+        plt.scatter(*centroids[i], color=colmap[i] ,marker="x", label = "centroid %s" %i)
+
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title('Inital data points')
+    plt.legend()
+    plt.savefig('graphs/initial_data.png')
+
+def clustered_data_graph():
+    colors = map(lambda x: colmap[x+1], labels)
+    plt.scatter(X[:,0], X[:,1], color = colors, label = "data points")
+
+    colmap = {1: 'r', 2: 'g', 3: 'b'}
+    for i in centroids.keys():
+        plt.scatter(*centroids[i], color=colmap[i])
+
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title('Clustered data points')
+    plt.legend()
+    plt.savefig('graphs/clustered_data.png')
+
 if __name__ == "__main__" :  
+
+    inital_data_graph()
     ##### Step 1 - Assign starting centriods ######
     #### done in params above #####
     kmeans()
+    clustered_data_graph()
     
 
 
