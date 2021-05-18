@@ -32,6 +32,10 @@ def example_number(check):
     else:
         return 8
 
+def distance(p1,p2):
+    distance = math.sqrt( ( (p1[0]-p2[0]) **2)  + ( (p1[1]-p2[1]) **2) )
+    return distance
+
 if __name__ == "__main__" :  
 
     print('Itteration 1 \n')
@@ -41,7 +45,7 @@ if __name__ == "__main__" :
         classifications[i] = []
 
     for x in X:
-        distances = [np.linalg.norm(x-centroids[i]) for i in centroids.keys()]
+        distances = [distance(x, centroids[i]) for i in centroids.keys()]
         classification = distances.index(min(distances))
         classifications[classification].append(x)
 
