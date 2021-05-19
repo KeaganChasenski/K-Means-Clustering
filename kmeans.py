@@ -15,44 +15,66 @@ max_itterations = 10
 k = 3
 
 ##### Step 1 - Assign starting centriods ######
-centroids = {1:[2,10] , 2: [5,8], 3:[1,2]}
+centroids = {1:[2,10] , 2:[5,8], 3:[1,2]}
 
 def distance(p1,p2):
+    # Simple function to calculate Euclidean distance of two points
+    # Returns distance 
     distance = math.sqrt( ( (p1[0]-p2[0]) **2)  + ( (p1[1]-p2[1]) **2) )
     return distance
 
 def optimised(prev_centroids):
+    # Loop through each centroid value 
     for c in centroids:
+        # Assign previous and current centroids
         original_centroid = prev_centroids[c]
         current_centroid = centroids[c]
-            
+
+        # Check to see that the percentage change is greater than the hyperparamter tolerance
+        # If it is greater return optimised = False to allow looping to next itteration    
         if np.sum((current_centroid - original_centroid) / original_centroid * 100.0) > tolerance:
             return  False 
     
     return True
 
 def get_key(val):
+    # Code used to search the dictionary of X_elements and output the key when the 2D array element is found
     for key, value in X_elements.items():
          if val == value:
-             return key
+            return key
  
-    return "key doesn't exist"
+    return "error 404"
 
-def write_to_file(clusters):
+def print_output(clusters):
+    # Loop through keys in clusters array (1,2,3) 
     for i in clusters.keys(): 
-        items = clusters[i]
-        elements = ''
-        for c in items:
-            elements = elements + str(get_key(c)) + ","
 
-        print('Cluster ', i+1, ':' , elements)
-        print('Centriod: ', str(centroids[i+1]) ,"\n")
+        # Some additional code to be able to print element number instead of the array value in X
+        items = clusters[i]
+        elements = []
+        for c in items:
+            elements.append(get_key(c))
+
+        converted_list = [str(element) for element in elements]
+        elements_string = ", ".join(converted_list)
+
+        cent = centroids[i+1]
+        round_centroids = [round(num, 3) for num in cent]
+        round_centroids = [str(rc) for rc in round_centroids]
+        centroids_string = ", ".join(round_centroids)
+        centroids_string = "(" + centroids_string + ")"
+
+        print('Cluster ', i+1, ':' , elements_string)
+        print('Centriod: ',centroids_string ," \n")
 
 def kmeans():
+    ##### Loop for each itteration of kmeans() #####
+
     for i in range(max_itterations):
         print('Itteration ', i+1, '\n')
         clusters = {}
 
+        # Create K number of cluster arrays
         for i in range(k):
             clusters[i] = []
 
@@ -64,7 +86,8 @@ def kmeans():
             cluster = distances.index(min(distances))
             clusters[cluster].append(x)
 
-        write_to_file(clusters)
+        # Output Cluster and their associated data points as well as centroids
+        print_output(clusters)
         
         # Deep copy of centroids made so can compare
         prev_centroids = copy.deepcopy(centroids)
@@ -73,7 +96,7 @@ def kmeans():
         
         # Calculate the new average of each cluster
         for c in clusters.keys():
-            centroids[c+1] = np.mean(clusters[c], axis=0, dtype=np.float16)
+            centroids[c+1] = np.mean(clusters[c], axis=0)
 
         ##### Step 5 - Reassign clusters based on new centroids ######
         ##### Done in next itteration of loop by clearing clusters {} #####
