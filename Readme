@@ -1,15 +1,48 @@
-To make virtual enviroment:
-    make 
+Hi there :)
 
-To run python code:
-    make run
+Thanks for marking. 
+If you have any issues simply use 'make run' which is described below.
 
-To deactive venv:
-    deactivate 
-    make clean
+###### Some make commands: ######
+    'make run' - will make the virtual enviroment and install the requirements.txt and then run the kmeans.py file.
+    'make' , 'make venv' and 'make install' - will both make the virtual enviroment and install the requirements.txt, but not run the python file 
+    'make clean' - will remove the virtual enviroment as well as the graphs produced and all .pyc files.
 
-To clean:
-    make clean
+###### Output ######
+When run, output will be printined to the terminal to allow you to verify the output in my answers.txt file.
+In the answers.txt the first 6 lines will not be printed in terminal, those are in the .txt file to 
+answer the question the assignment asked. Under ### Output ### is the printed values to be compared.
 
-When run, output will be printined to file called
-I had fun with this assignment so I added a folder called data, in which after run there will be a graph of the inital data, and then a graph of the final clustered data (after convergance)
+###### Git ######
+There is a git log included of all my commits. 
+
+###### Extra ######
+I had fun with this assignment so I added a folder called graphs, in which after run there will be a graph of the inital data,
+ and then a graph of the final clustered data (after convergance).
+
+###### Functions ######
+all functions are run from __name___ == "__main__"
+
+def distance(p1,p2):
+    simple function to calculate Euclidean distance of two points
+
+def optimised(prev_centroids):
+    checks that the difference between the previous centriod and the new centriod are not within the tolerance value
+    ends kmeans if has been optimised
+
+def get_key(val):
+    function needed to key element number of data rather than data x,y value itself
+    just for formatting
+
+def print_output(clusters):
+    prints the output required by the assignment brief.
+    used for formatting
+
+def kmeans():
+    the kmeans algorithm implemented here
+    makes function calls to distance, optimised amd print_output
+
+def inital_data_graph():  
+    extra function for fun to show visual represention of intial data
+def clustered_data_graph():
+    extra function for fun to show visual represention of clustered data
