@@ -4,8 +4,8 @@ import math
 import copy
 
 # Data (examples have two attributes: X, Y , both in range: [1, 10]).
-X = [[2,10],[2,5],[8,4],[5,8],[7,5],[6,4],[1,2],[4,9]]
-X_elements = {1:[2,10],2:[2,5],3:[8,4],4:[5,8],5:[7,5],6:[6,4],7:[1,2],8:[4,9]}
+Data = [[2,10],[2,5],[8,4],[5,8],[7,5],[6,4],[1,2],[4,9]]
+Data_elements = {1:[2,10],2:[2,5],3:[8,4],4:[5,8],5:[7,5],6:[6,4],7:[1,2],8:[4,9]}
 
 # Hyperparamters
 tolerance = 0.001
@@ -39,7 +39,7 @@ def optimised(prev_centroids):
 
 def get_key(val):
     # Code used to search the dictionary of X_elements and output the key when the 2D array element is found
-    for key, value in X_elements.items():
+    for key, value in Data_elements.items():
          if val == value:
             return key
  
@@ -57,13 +57,15 @@ def print_output(clusters):
 
         converted_list = [str(element) for element in elements]
         elements_string = ", ".join(converted_list)
-
+        
+        # Some code to convert to a string and format the output like the assignment brief required
         cent = centroids[i+1]
         round_centroids = [round(num, 3) for num in cent]
         round_centroids = [str(rc) for rc in round_centroids]
         centroids_string = ", ".join(round_centroids)
         centroids_string = "(" + centroids_string + ")"
 
+        # Output code
         print('Cluster ', i+1, ':' , elements_string)
         print('Centriod: ',centroids_string ," \n")
 
@@ -79,17 +81,17 @@ def kmeans():
             clusters[i] = []
 
         ###### Step 2 - Calculate Distance for each data point to each centriod ######
-        for x in X:
-            distances = [distance(x, centroids[i]) for i in centroids.keys()]
+        for element in Data:
+            distances = [distance(element, centroids[i]) for i in centroids.keys()]
 
             ###### Step 3 - Assign each data point to nearest centriod ######
             cluster = distances.index(min(distances))
-            clusters[cluster].append(x)
+            clusters[cluster].append(element)
 
         # Output Cluster and their associated data points as well as centroids
         print_output(clusters)
         
-        # Deep copy of centroids made so can compare
+        # Deep copy of centroids made so can compare to previous for optimisation function
         prev_centroids = copy.deepcopy(centroids)
 
         ##### Step 4 - calculate new centroids from mean of cluster ######
@@ -103,14 +105,17 @@ def kmeans():
 
         ##### Step 6 - repeate 4 and 5 until max itterations reach or optimzed is True. ######
         if optimised(prev_centroids):
+            clustered_data_graph(clusters,centroids)
             break
  
-def inital_data_graph():  
+def inital_data_graph(): 
+    X = np.array([[2,10],[2,5],[8,4],[5,8],[7,5],[6,4],[1,2],[4,9]])
+    colourmap = {1: 'r', 2: 'g', 3: 'b'}
+
     plt.scatter(X[:,0], X[:,1], color = 'k', label = "data points")
 
-    colmap = {1: 'r', 2: 'g', 3: 'b'}
     for i in centroids.keys():
-        plt.scatter(*centroids[i], color=colmap[i] ,marker="x", label = "centroid %s" %i)
+        plt.scatter(*centroids[i], color=colourmap[i] ,marker="x", label = "centroid %s" %i)
 
     plt.xlabel('X')
     plt.ylabel('Y')
@@ -118,27 +123,32 @@ def inital_data_graph():
     plt.legend()
     plt.savefig('graphs/initial_data.png')
 
-def clustered_data_graph():
-    plt.scatter(X[:,0], X[:,1],label = "data points")
+def clustered_data_graph(clusters,centriods):
+    colourmap = {1: 'r', 2: 'g', 3: 'b'}
 
-    colmap = {1: 'r', 2: 'g', 3: 'b'}
+    for cluster in clusters.keys():
+        color = colourmap[cluster+1]
+
+        for set in clusters[cluster]:
+            plt.scatter(set[0], set[1], marker="o", color=color)
+
     for i in centroids.keys():
-        plt.scatter(*centroids[i], color=colmap[i])
+        plt.scatter(*centroids[i], color=colourmap[i] ,marker="x")
 
     plt.xlabel('X')
     plt.ylabel('Y')
+    plt.legend().remove()
     plt.title('Clustered data points')
-    plt.legend()
     plt.savefig('graphs/clustered_data.png')
 
-if __name__ == "__main__" :  
+if __name__ == "__main__" :
 
-    #inital_data_graph()
+    # Create inital graph, just for my visual fun
+    inital_data_graph()
 
     ##### Step 2-6 - In kmeans() function ######
     kmeans()
 
-    #clustered_data_graph()
     
 
 
