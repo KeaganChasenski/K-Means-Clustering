@@ -1,3 +1,10 @@
+Q: How many iterations are needed for k-means to converge?
+A: As can be seen from the output below, the max number of Itterations needed
+    for the k-means to converge is 4 Itterations.
+    This is based of a tolerance value set as a hyperparameter of 0.01
+
+### Output ###
+
 Itteration  1 
 
 Cluster  1 : 1
