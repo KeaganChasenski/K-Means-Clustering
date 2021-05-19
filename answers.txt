@@ -1,0 +1,43 @@
+Itteration  1 
+
+Cluster  1 : 1
+Centriod:  (2, 10)  
+
+Cluster  2 : 3, 4, 5, 6, 8
+Centriod:  (5, 8)  
+
+Cluster  3 : 2, 7
+Centriod:  (1, 2)  
+
+Itteration  2 
+
+Cluster  1 : 1, 8
+Centriod:  (2.0, 10.0)  
+
+Cluster  2 : 3, 4, 5, 6
+Centriod:  (6.0, 6.0)  
+
+Cluster  3 : 2, 7
+Centriod:  (1.5, 3.5)  
+
+Itteration  3 
+
+Cluster  1 : 1, 4, 8
+Centriod:  (3.0, 9.5)  
+
+Cluster  2 : 3, 5, 6
+Centriod:  (6.5, 5.25)  
+
+Cluster  3 : 2, 7
+Centriod:  (1.5, 3.5)  
+
+Itteration  4 
+
+Cluster  1 : 1, 4, 8
+Centriod:  (3.667, 9.0)  
+
+Cluster  2 : 3, 5, 6
+Centriod:  (7.0, 4.333)  
+
+Cluster  3 : 2, 7
+Centriod:  (1.5, 3.5)
