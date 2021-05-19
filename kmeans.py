@@ -37,6 +37,17 @@ def get_key(val):
              return key
  
     return "key doesn't exist"
+
+def write_to_file(clusters):
+    for i in clusters.keys(): 
+        items = clusters[i]
+        elements = ''
+        for c in items:
+            elements = elements + str(get_key(c)) + ","
+
+        print('Cluster ', i+1, ':' , elements)
+        print('Centriod: ', str(centroids[i+1]) ,"\n")
+
 def kmeans():
     for i in range(max_itterations):
         print('Itteration ', i+1, '\n')
@@ -53,14 +64,7 @@ def kmeans():
             cluster = distances.index(min(distances))
             clusters[cluster].append(x)
 
-        for i in clusters.keys(): 
-            items = clusters[i]
-            elements = ''
-            for c in items:
-                elements = elements + str(get_key(c)) + ","
-
-            print('Cluster ', i+1, ':' , elements)
-            print('Centriod: ', str(centroids[i+1]) ,"\n")
+        write_to_file(clusters)
         
         # Deep copy of centroids made so can compare
         prev_centroids = copy.deepcopy(centroids)
