@@ -105,6 +105,7 @@ def kmeans():
 
         ##### Step 6 - repeate 4 and 5 until max itterations reach or optimzed is True. ######
         if optimised(prev_centroids):
+            #Output cluster_data_graph passing the final centrod values and clusters associated with those
             clustered_data_graph(clusters,centroids)
             break
  
